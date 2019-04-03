@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Fractal : MonoBehaviour
 {
+	[SerializeField] bool spawnHere = true;
 	[SerializeField] Mesh mesh_;
 	[SerializeField] Material material_;
 
 	[SerializeField] float updatePos = 0.5f, width_ = 0.1f;
 	[SerializeField] int depth_ = 0;
 
+
 	const int maxDepth = 7;
 	Vector3 start_ = Vector3.zero;
 	Vector3 end_ = Vector3.up;
+
+	private void Awake()
+	{
+		if (spawnHere)
+		{
+			start_ = this.transform.position;
+			end_ += start_;
+		}
+	}
 
 	void initialize(Fractal parent,float giveLength,float giveWidth,Quaternion giveRotation,int depth){
 		this.mesh_ = parent.mesh_;
