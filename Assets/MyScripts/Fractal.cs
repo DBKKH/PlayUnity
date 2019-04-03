@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fractal : MonoBehaviour
 {
-	[SerializeField] bool spawnHere = true;
+	[SerializeField] bool spawnHere = true, spawnIncrimental = false;
 	[SerializeField] Mesh mesh_;
 	[SerializeField] Material material_;
 
@@ -25,7 +25,8 @@ public class Fractal : MonoBehaviour
 		}
 	}
 
-	void initialize(Fractal parent,float giveLength,float giveWidth,Quaternion giveRotation,int depth){
+	void initialize(Fractal parent, float giveLength, float giveWidth, Quaternion giveRotation, int depth)
+	{
 		this.mesh_ = parent.mesh_;
 		this.material_ = parent.material_;
 		this.transform.position = parent.transform.position + Vector3.up;
@@ -36,7 +37,13 @@ public class Fractal : MonoBehaviour
 
 
 	IEnumerator Start()
-    {
+	{
+	//	if (spawnIncrimental)
+		{
+			start_ = this.transform.position;
+			end_ += start_;
+		}
+
 		gameObject.AddComponent<MeshFilter>().mesh = mesh_;
 		gameObject.AddComponent<MeshRenderer>().material = material_;
 		transform.position = (start_ + end_) * updatePos;
@@ -47,10 +54,11 @@ public class Fractal : MonoBehaviour
 		transform.localScale = new Vector3(width_, length * 1.0f, width_);
 
 		if (depth_ >= maxDepth) yield break;
-		
+
 		float roty = Random.Range(0f, 360f);
 
-		for(var i=0;i<5;++i){
+		for (var i = 0; i < 5; ++i)
+		{
 			if (Random.Range(0, 2) != 0) continue;
 			yield return new WaitForSeconds(0.1f);
 			var child = new GameObject();
@@ -61,6 +69,6 @@ public class Fractal : MonoBehaviour
 			roty += 137.5f;
 		}
 
-    }
+	}
 
 }
