@@ -8,7 +8,9 @@ public class AvoidDoubleEXE : MonoBehaviour
 	public Button endButton;
 	public Text launchDoubleAppLog;
 	public string errorLog = "がすでにが起動しています";
-	private void Start()
+
+	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+	private void Init()
 	{
 		launchDoubleAppLog.gameObject.SetActive(false);
 		endButton.gameObject.SetActive(false);
@@ -24,6 +26,10 @@ public class AvoidDoubleEXE : MonoBehaviour
 
 			Debug.Log(errorLog);
 			endButton.onClick.AddListener(()=>Application.Quit());			
+		}
+		else
+		{
+			Debug.unityLogger.logEnabled = false;
 		}
 	}
 }
