@@ -59,6 +59,7 @@ public class Fractal : MonoBehaviour
 
 		for (var i = 0; i < 5; ++i)
 		{
+			Debug.Log(i);
 			if (Random.Range(0, 2) != 0) continue;
 			yield return new WaitForSeconds(0.1f);
 			var child = new GameObject();
