@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
         elapsedTime -= Time.deltaTime;
         elapsedText.text = elapsedTime.ToString();
 
-        if (elapsedTime == 0.0f) Result();
+        if (elapsedTime <= 0.0f) Result();
     }
 
     public  void Result()
