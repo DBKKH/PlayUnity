@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
 
     public  void Result()
     {
-        elapsedText.gameObject.SetActive(false);
+        //elapsedText.gameObject.SetActive(false);
 
         if (itemCount == 0) WinProcess();
         else if (itemCount != 0) LoseProcess();
