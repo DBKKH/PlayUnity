@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
-
     }
     private void FixedUpdate()
     {
@@ -23,19 +22,18 @@ public class PlayerController : MonoBehaviour
         z = Input.GetAxis("Horizontal");
 
         rigidbody.AddForce(x * speed, 0, -z * speed);
-    }
+	}
 
-    private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
         {
             Destroy(other.gameObject);
-        //    particle = other.gameObject.GetComponent<ParticleSystem>();
-        //    particle.IsAlive(true);
-
-            gameController.itemCount = GameObject.FindGameObjectsWithTag("Item").Length;
-            gameController.countText.text = gameController.itemCount.ToString();
         }
+		else if (other.CompareTag("Disturber"))
+		{
+			gameController.Result();	
+		}
     }
        
     IEnumerator Starter()
