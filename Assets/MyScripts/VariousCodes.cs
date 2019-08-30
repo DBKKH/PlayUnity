@@ -10,7 +10,7 @@ public class VariousCodes
 		action.Invoke();
 		sw.Stop();
 
-		var actionName = action.Method.Name + "が処理Aにかかった時間";
+		var actionName = action.Method.Name + "が処理にかかった時間";
 		TimeSpan ts = sw.Elapsed;
 		var totalTime = $"　{ts}";
 
