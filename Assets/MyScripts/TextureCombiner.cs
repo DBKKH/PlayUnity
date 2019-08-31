@@ -13,6 +13,16 @@ public class TextureCombiner : MonoBehaviour
 
 	public void StartMerge() { useRunTime = !useRunTime; }
 
+	public void ClearTexture()
+	{
+		//var rt = Renderer;
+		//UnityEngine.Renderer.active = resultRenderer;
+		//GL.Clear(true, true, Color.clear);
+		//UnityEngine.Renderer.active = rt;
+		//resultRenderer.material.color
+		GL.Clear(false, false,Color.clear) ;
+	}
+
 	public void SetResultTexture()
 	{
 		var calc = new VariousCodes();
