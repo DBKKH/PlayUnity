@@ -2,46 +2,57 @@
 
 public class TextureCombiner : MonoBehaviour
 {
-	public Renderer baseTexture1, baseTexture2, textureResult;
+	[SerializeField] bool useRunTime;
+	[SerializeField] Renderer renderer1, renderer2, resultRenderer;
 
-	public void Merge(/*Texture2D texture1, Texture2D texture2*/)
+	private void Update()
 	{
-		//baseTexture1 = texture1;
-		//baseTexture2 = texture2;
-
-		this.textureResult.material.mainTexture = AddWatermark(ToTexture2D(baseTexture1.material.mainTexture), ToTexture2D(baseTexture2.material.mainTexture));
+		if (!useRunTime) return;
+		SetResultTexture();
 	}
 
-	public Texture2D AddWatermark(Texture2D background, Texture2D watermark)
-	{
-		int startX = 0;
-		int startY = background.height - watermark.height;
+	public void StartMerge() { useRunTime = !useRunTime; }
 
-		for (int x = startX; x < background.width; x++)
+	public void ClearTexture()
+	{
+		//var rt = Renderer;
+		//UnityEngine.Renderer.active = resultRenderer;
+		//GL.Clear(true, true, Color.clear);
+		//UnityEngine.Renderer.active = rt;
+		//resultRenderer.material.color
+		GL.Clear(false, false,Color.clear) ;
+	}
+
+	public void SetResultTexture()
+	{
+		var calc = new VariousCodes();
+		Debug.Log(
+		calc.CalcTime(() =>
 		{
 
-			for (int y = startY; y < background.height; y++)
-			{
-				Color bgColor = background.GetPixel(x, y);
-				Color wmColor = watermark.GetPixel(x - startX, y - startY);
+			//make texture into texture2D.
+			var texture1 = ToTexture2D(renderer1.material.mainTexture);
+			var texture2 = ToTexture2D(renderer2.material.mainTexture);
 
-				Color final_color = Color.Lerp(bgColor, wmColor, wmColor.a / 1.0f);
-
-				background.SetPixel(x, y, final_color);
-			}
-		}
-
-		background.Apply();
-		return background;
+			//set result texture to resultRenderer.
+			resultRenderer.material.mainTexture = CombineTexutes(texture1, texture2);
+		})
+		);
 	}
 
+	/// <summary>
+	/// Combines textures from uperLeft.
+	/// </summary>
+	/// <param name="_textureA"></param>
+	/// <param name="_textureB"></param>
+	/// <returns></returns>
 	public Texture2D CombineTexutes(Texture2D _textureA, Texture2D _textureB)
 	{
-		//Create new textures
+		//create new textures
 		Texture2D textureResult = new Texture2D(_textureA.width, _textureA.height);
 		//create clone form texture
 		textureResult.SetPixels(_textureA.GetPixels());
-		//Now copy texture B in texutre A
+		//copy texture B in texutre A
 		for (int x = 0; x < _textureB.width; x++)
 		{
 			for (int y = 0; y < _textureB.height; y++)
@@ -49,25 +60,31 @@ public class TextureCombiner : MonoBehaviour
 				Color c = _textureB.GetPixel(x, y);
 				if (c.a > 0.0f) //Is not transparent
 				{
-					//Copy pixel colot in TexturaA
+					//copy pixel colot in TexturaA
 					textureResult.SetPixel(x, y, c);
 				}
 			}
 		}
-		//Apply colors
+
+		//apply changes by SetPixel().
 		textureResult.Apply();
 		return textureResult;
 	}
 
-	public Texture2D ToTexture2D(Texture self)
+	/// <summary>
+	/// makes texture into texture2D.
+	/// </summary>
+	/// <param name="my">is original texture.</param>
+	/// <returns>result texture2D.</returns>
+	public Texture2D ToTexture2D(Texture my)
 	{
-		var sw = self.width;
-		var sh = self.height;
+		var myWidth = my.width;
+		var myHeight = my.height;
 		var format = TextureFormat.RGBA32;
-		var result = new Texture2D(sw, sh, format, false);
+		var result = new Texture2D(myWidth, myHeight, format, false);
 		var currentRT = RenderTexture.active;
-		var rt = new RenderTexture(sw, sh, 32);
-		Graphics.Blit(self, rt);
+		var rt = new RenderTexture(myWidth, myHeight, 32);
+		Graphics.Blit(my, rt);
 		RenderTexture.active = rt;
 		var source = new Rect(0, 0, rt.width, rt.height);
 		result.ReadPixels(source, 0, 0);
