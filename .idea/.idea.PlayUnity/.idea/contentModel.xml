@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\hdkki\.Rider2019.3\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\hdkki\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\hdkki\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_PlayUnity.1548589270.00" t="ExcludeRecursive" />
+    <e p="E:\User\Documents\Develope\02_UnityProjects\PlayUnity" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="MyScripts" t="Include">
+          <e p="AvoidDoubleEXE.cs" t="Include" />
+          <e p="Corutine" t="Include">
+            <e p="ColorCorutine.cs" t="Include" />
+            <e p="CorutinTest.cs" t="Include" />
+            <e p="StopCorutin.cs" t="Include" />
+          </e>
+          <e p="CreateTexture.cs" t="Include" />
+          <e p="Editor" t="Include">
+            <e p="DevTools" t="Include">
+              <e p="BuildTool.cs" t="Include" />
+            </e>
+          </e>
+          <e p="FollowRig.cs" t="Include" />
+          <e p="Fractal.cs" t="Include" />
+          <e p="GameController.cs" t="Include" />
+          <e p="ItemSpawner.cs" t="Include" />
+          <e p="KeywordDetecter.cs" t="Include" />
+          <e p="ObjectMover.cs" t="Include" />
+          <e p="PlayerController.cs" t="Include" />
+          <e p="PraCountYeild.cs" t="Include" />
+          <e p="Roller.cs" t="Include" />
+          <e p="TestMethods.cs" t="Include" />
+          <e p="TestUnityAction.cs" t="Include" />
+          <e p="TextureCombiner.cs" t="Include" />
+          <e p="VariousCodes.cs" t="Include" />
+          <e p="VoiceGeter.cs" t="Include" />
+          <e p="WebcamCapture.cs" t="Include" />
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="PlayUnity.sln" t="IncludeFlat" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
