@@ -1,12 +1,9 @@
-﻿/// reference : https://qiita.com/sango/items/474efb4c016a136c84ce
-/// official Document:
-
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System;
 using System.IO;
+using UnityEditor.Build.Reporting;
 
 public static class BuildTool
 {
@@ -30,16 +27,6 @@ public static class BuildTool
 
     private static void BuildWindows(bool isDevelop)
     {
-        var buildOptions = new BuildPlayerOptions
-        {
-            scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray(),
-            locationPathName = $"Builds\\Windows\\{Application.productName}.exe", 
-            target = BuildTarget.StandaloneWindows64,
-            options = isDevelop ? BuildOptions.Development : BuildOptions.AllowDebugging
-        };
-            
-        Build(buildOptions);
-     
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
 
         Debug.Log($@"
@@ -52,6 +39,16 @@ version = {PlayerSettings.bundleVersion}
         // バンドルアセットをコピー
         CopyDirectory("BundleAssets", "Builds/Windows", true);
         CopyDirectory("UserData", "Builds/Windows/UserData", true);
+
+        var buildOptions = new BuildPlayerOptions
+        {
+            scenes = EditorBuildSettings.scenes.Select(s => s.path).ToArray(),
+            locationPathName = $"Builds\\Windows\\{Application.productName}.exe", 
+            target = BuildTarget.StandaloneWindows64,
+            options = isDevelop ? BuildOptions.Development : BuildOptions.AllowDebugging
+        };
+            
+        Build(buildOptions);
 
         // IL2CPPの場合シンボルファイルを外に移動
         if (PlayerSettings.GetScriptingBackend(BuildTargetGroup.Standalone) != ScriptingImplementation.IL2CPP) 
@@ -91,8 +88,7 @@ version = {PlayerSettings.bundleVersion}
 bundle version code = {PlayerSettings.Android.bundleVersionCode}
 =====================
 ");
-        
-        SignApk();
+        if(isDevelop) SignApk();
 
         var buildOptions = new BuildPlayerOptions
         {
@@ -111,7 +107,7 @@ bundle version code = {PlayerSettings.Android.bundleVersionCode}
             Debug.Log(file);
         }
 
-        UnsignApk();
+        if(isDevelop) UnsignApk();
     }
 
     private static void Build(BuildPlayerOptions option)
@@ -121,20 +117,32 @@ bundle version code = {PlayerSettings.Android.bundleVersionCode}
             Debug.Log("Multithread renderingが無効になっています。再度有効にします。");
             PlayerSettings.MTRendering = true;
         }
-        
-        var report = BuildPipeline.BuildPlayer(option);
-        if (report.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
-            throw new Exception("Build Not Succeeded");
+
+        BuildReport report;
+        try
+        {
+            report = BuildPipeline.BuildPlayer(option);
+            
+            if (report.summary.result != BuildResult.Succeeded)
+                Debug.LogError("Build Not Succeeded");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Build Not Succeeded {e}");
+            throw;
+        }
     }
 
     private static void SignApk()
     {
-        var storeName = Environment.GetEnvironmentVariable("APK_KEYSTORE_NAME");
-        var storePass = Environment.GetEnvironmentVariable("APK_KEYSTORE_PASS");
+        string storeName = Environment.GetEnvironmentVariable("APK_KEYSTORE_NAME");
+        string storePass = Environment.GetEnvironmentVariable("APK_KEYSTORE_PASS");
 
-        var aliasName = Environment.GetEnvironmentVariable("APK_ALIAS_NAME");
-        var aliasPass = Environment.GetEnvironmentVariable("APK_ALIAS_PASS");
+        string aliasName = Environment.GetEnvironmentVariable("APK_ALIAS_NAME");
+        string aliasPass = Environment.GetEnvironmentVariable("APK_ALIAS_PASS");
 
+        PlayerSettings.Android.useCustomKeystore = true;
+        
         PlayerSettings.Android.keystoreName = storeName;
         PlayerSettings.Android.keystorePass = storePass;
         PlayerSettings.Android.keyaliasName = aliasName;
@@ -147,6 +155,8 @@ bundle version code = {PlayerSettings.Android.bundleVersionCode}
         PlayerSettings.Android.keystorePass = default;
         PlayerSettings.Android.keyaliasName = default;
         PlayerSettings.Android.keyaliasPass = default;
+        
+        PlayerSettings.Android.useCustomKeystore = false;
     }
 
     private static void CopyDirectory(string source, string dest, bool overwrite)
