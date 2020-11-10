@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WebcamCapture : MonoBehaviour
 {
-	private WebCamTexture webcamTexture;
+	WebCamTexture webcamTexture;
 	public Renderer _renderer;
 
-	private Quaternion baseRotation;
+	Quaternion baseRotation;
 
 	void Start()
 	{
@@ -25,7 +25,7 @@ public class WebcamCapture : MonoBehaviour
 	//}
 	// https://nil-one.com/blog/article/2018/01/30/imageanalysisusingunity03/
 
-	private void Init()
+	void Init()
 	{
 		webcamTexture = new WebCamTexture();
 

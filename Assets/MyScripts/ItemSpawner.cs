@@ -8,9 +8,9 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour
 {
 	public GameObject item,stage;
-	
 
-	private void Awake()
+
+	void Awake()
 	{
 	
 	}
