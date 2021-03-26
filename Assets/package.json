@@ -1,0 +1,15 @@
+{
+  "name": "dev.personal.koike",
+  "displayName": "test",
+  "version": "0.1.0",
+  "unity": "2020.3",
+  "description": "Test",
+  "documentationUrl": "https://github.com/DBKKH/PlayUnity",
+  "dependencies": {
+  },
+  "author": {
+    "name": "koike",
+    "email": "hdkkik@gmail.com"
+  },
+  "type": "library"
+}
