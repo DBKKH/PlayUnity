@@ -11,7 +11,7 @@ public class TextureCombiner : MonoBehaviour
 		SetResultTexture();
 	}
 
-	public void StartMerge() { useRunTime = !useRunTime; }
+	public void StartRuntimeMerge() { useRunTime = !useRunTime; }
 
 	public void ClearTexture()
 	{

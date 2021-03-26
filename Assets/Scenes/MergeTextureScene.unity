@@ -429,7 +429,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1153332241}
-        m_MethodName: StartMerge
+        m_MethodName: StartRuntimeMerge
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
