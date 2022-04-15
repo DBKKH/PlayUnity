@@ -17,7 +17,7 @@ public class Fractal : MonoBehaviour
 	Vector3 end_ = Vector3.up;
     List<GameObject> objects = new List<GameObject>();
 
-	private void Awake()
+    void Awake()
 	{
 		if (spawnHere)
 		{

@@ -51,7 +51,7 @@ public class KeywordDetecter : MonoBehaviour
 
 
     //キーワードを認識したときに反応する処理
-    private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
+    void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
     {
         //デリゲート
         //イベントやコールバック処理の記述をシンプルにしてくれる。クラス・ライブラリを活用するには必須らしい

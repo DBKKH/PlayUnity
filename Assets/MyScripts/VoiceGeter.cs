@@ -26,25 +26,25 @@ public class VoiceGeter : MonoBehaviour
     }
 
     //DictationResult：音声が特定の認識精度で認識されたときに発生するイベント
-    private void DictationRecognizer_DictationResult(string text, ConfidenceLevel confidence)
+    void DictationRecognizer_DictationResult(string text, ConfidenceLevel confidence)
     {
         Debug.Log("認識した音声：" + text);
     }
 
     //DictationHypothesis：音声入力中に発生するイベント
-    private void DictationRecognizer_DictationHypothesis(string text)
+    void DictationRecognizer_DictationHypothesis(string text)
     {
         Debug.Log("音声認識中：" + text);
     }
 
     //DictationComplete：音声認識セッションを終了したときにトリガされるイベント
-    private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)
+    void DictationRecognizer_DictationComplete(DictationCompletionCause cause)
     {
         Debug.Log("音声認識完了");
     }
 
     //DictationError：音声認識セッションにエラーが発生したときにトリガされるイベント
-    private void DictationRecognizer_DictationError(string error, int hresult)
+    void DictationRecognizer_DictationError(string error, int hresult)
     {
         Debug.Log("音声認識エラー");
     }

@@ -12,11 +12,12 @@ public class PlayerController : MonoBehaviour
 
     ParticleSystem particle;
 
-    private void Awake()
+    void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
     }
-    private void FixedUpdate()
+
+    void FixedUpdate()
     {
         x = Input.GetAxis("Vertical");
         z = Input.GetAxis("Horizontal");
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
         rigidbody.AddForce(x * speed, 0, -z * speed);
 	}
 
-	private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item"))
         {

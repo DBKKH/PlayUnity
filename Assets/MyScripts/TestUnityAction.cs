@@ -10,8 +10,7 @@ public class TestUnityAction : MonoBehaviour
     [System.Serializable]
     public class IntUnityEvent : UnityEngine.Events.UnityEvent<int> { }
 
-    [SerializeField]
-    private IntUnityEvent m_events = new IntUnityEvent();
+    [SerializeField] IntUnityEvent m_events = new IntUnityEvent();
 
     void Start()
     {

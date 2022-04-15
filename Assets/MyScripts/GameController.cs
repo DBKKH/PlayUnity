@@ -15,13 +15,13 @@ public class GameController : MonoBehaviour
 
 	[SerializeField,Tooltip("wanna use elapsed time")] bool NotLoser = true;
 
-    private void Awake()
+	void Awake()
     {
 		if (NotLoser) elapsedTime = 0;
 		resultText.gameObject.SetActive(false);
     }
 
-    private void Update()
+	void Update()
     {
 		itemCount = GameObject.FindGameObjectsWithTag("Item").Length;
 		countText.text = itemCount.ToString();
