@@ -17,4 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RollBall.unity
     guid: d16e4bee4220b5046a6ab4372c8f23fc
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a905aae5c8a972d489616030d0161050,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 2fe25330ce3b63447828e9813ac4bcb9,
+      type: 2}
