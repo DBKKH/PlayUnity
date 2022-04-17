@@ -1,11 +1,13 @@
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Unlit/SphereShader"
+Shader "Custom/SphereShader"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Tint ("Tint Color", Color) = (.5, .5, .5, .5)
+        _marginColor ("Margin Color", Color) = (.5, .5, 0, 0)
+        
         [Gamma] _Exposure ("Exposure", Range(0, 8)) = 1.0
         _Rotation ("Rotation", Range(0, 360)) = 0
         
@@ -15,8 +17,6 @@ Shader "Unlit/SphereShader"
         [NoScaleOffset] _Tex ("Spherical  (HDR)", 2D) = "grey" {}
         
         [KeywordEnum(6 Frames Layout, Latitude Longitude Layout)] _Mapping("Mapping", Float) = 1
-        
-        [Enum(Custom, 0, 360 Degrees, 1, 180 Degrees, 2)] _CustomType("Custom Type", Float) = 0
         
         [Toggle] _MirrorOnBack("Mirror on Back", Float) = 0
         
@@ -56,11 +56,9 @@ Shader "Unlit/SphereShader"
 
             v2f vert (appdata v)
             {
-                // v.uv.x = 1-v.uv.x;
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 
