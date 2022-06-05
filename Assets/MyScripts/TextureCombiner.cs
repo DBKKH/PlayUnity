@@ -5,13 +5,13 @@ public class TextureCombiner : MonoBehaviour
 	[SerializeField] bool useRunTime;
 	[SerializeField] Renderer renderer1, renderer2, resultRenderer;
 
-	private void Update()
+	void Update()
 	{
 		if (!useRunTime) return;
 		SetResultTexture();
 	}
 
-	public void StartMerge() { useRunTime = !useRunTime; }
+	public void StartRuntimeMerge() { useRunTime = !useRunTime; }
 
 	public void ClearTexture()
 	{

@@ -5,14 +5,14 @@ using UnityEngine;
 public class FollowRig : MonoBehaviour
 {
     public Transform target;
-    private Vector3 offset;
+    Vector3 offset;
 
-    private void Awake()
+    void Awake()
     {
         offset = this.GetComponent<Transform>().position - target.position;
     }
 
-    private void Update()
+    void Update()
     {
         GetComponent<Transform>().position = target.position + offset;
     }

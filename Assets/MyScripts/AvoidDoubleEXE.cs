@@ -10,7 +10,7 @@ public class AvoidDoubleEXE : MonoBehaviour
 	public string errorLog = "がすでにが起動しています";
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-	private void Init()
+	void Init()
 	{
 		launchDoubleAppLog.gameObject.SetActive(false);
 		endButton.gameObject.SetActive(false);

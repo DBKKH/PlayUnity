@@ -7,7 +7,7 @@ public class ObjectMover : MonoBehaviour
 	public float moveRangeX = 5, moveRangeY = 0, moveRangeZ = 1;
 	float sumTime = 0.1f;
 
-	private void Update()
+	void Update()
 	{
 			sumTime += Time.deltaTime;
 			this.transform.position = new Vector3(Mathf.Sin(180 * sumTime * Mathf.Deg2Rad), this.transform.position.y, this.transform.position.z);
