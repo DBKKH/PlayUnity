@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Custom_360Shader
+  m_Name: Custom_360ShaderTester
   m_Shader: {fileID: 4800000, guid: e06a804ba4864febae5e17554f16da98, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -19,34 +19,21 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 45e6b3c02ee1d43bd85c332e5df5ccdf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Tex:
-        m_Texture: {fileID: 2800000, guid: 45e6b3c02ee1d43bd85c332e5df5ccdf, type: 3}
+        m_Texture: {fileID: 2800000, guid: 72e994fbb37b40849b5ff1073974f321, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Angle: -5
-    - _DebagValue: 0
-    - _DebugValue: 0
     - _Exposure: 1
-    - _Horizontal: 117
+    - _Horizontal: 120
     - _HorizontalRotation: 0
-    - _ImageType: 1
     - _Layout: 0
     - _Mapping: 1
-    - _MirrorOnBack: 0
-    - _Rotation: 0
-    - _Vertical: 42
-    - _VerticalRotation: 136
+    - _Vertical: 120
+    - _VerticalRotation: 0
     m_Colors:
-    - _Color1: {r: 0, g: 0, b: 0, a: 1}
-    - _Color2: {r: 0.8018868, g: 0.3215112, b: 0.3215112, a: 1}
     - _DebugValue: {r: 0, g: 0, b: 0, a: 0}
     - _MarginColor: {r: 0, g: 0, b: 0, a: 0}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
-    - _marginColor: {r: 0.5, g: 0.3, b: 0, a: 0}
   m_BuildTextureStacks: []
