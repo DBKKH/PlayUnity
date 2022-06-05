@@ -1,6 +1,4 @@
-﻿// https://forpro.unity3d.jp/unity_pro_tips/2019/08/19/187/
-
-Shader "Custom/360Shader"
+﻿Shader "Custom/360Shader"
 {
     Properties
     {
@@ -12,13 +10,9 @@ Shader "Custom/360Shader"
         _VerticalRotation ("Vertical Rotation", Range(0, 360)) = 0
 
         _Horizontal ("Horizontal", Range(0, 360)) = 120
-        _Vertical ("Vertical", Range(0, 180)) = 120
+        _Vertical ("Vertical", Range(0, 90)) = 60
 
         [NoScaleOffset] _Tex ("Spherical  (HDR)", 2D) = "grey" {}
-        [KeywordEnum(6 Frames Layout, Latitude Longitude Layout)] _Mapping("Mapping", Float) = 1
-        [Enum(None, 0, Side by Side, 1, Over Under, 2)] _Layout("3D Layout", Float) = 0
-        
-        _DebugValue ("Debug Value", Color) = (0, 0, 0, 0)
     }
 
     SubShader
@@ -45,7 +39,6 @@ Shader "Custom/360Shader"
             #include "UnityCG.cginc"
 
             sampler2D _Tex;
-            float4 _Tex_TexelSize;
             half4 _Tex_HDR;
             half4 _Tint;
             half4 _MarginColor;
@@ -54,12 +47,7 @@ Shader "Custom/360Shader"
             float _VerticalRotation;
             float _Horizontal;
             float _Vertical;
-            half4 _DebugValue;
-            #ifndef _MAPPING_6_FRAMES_LAYOUT
-            int _Layout;
-            #endif
 
-            #ifndef _MAPPING_6_FRAMES_LAYOUT
             inline float2 ToRadialCoords(float3 coords)
             {
                 float3 normalizedCoords = normalize(coords);
@@ -68,7 +56,6 @@ Shader "Custom/360Shader"
                 float2 sphereCoords = float2(longitude, latitude) * float2(0.5 / UNITY_PI, 1.0 / UNITY_PI);
                 return float2(0.5, 1.0) - sphereCoords;
             }
-            #endif
 
             float3 RotateAroundCenter(float3 vertex, float xDegrees, float yDegrees)
             {
@@ -84,8 +71,9 @@ Shader "Custom/360Shader"
                 float2x2 matrixY = float2x2(cosY, -sinY, sinY, cosY);
                 float2 mulx = mul(matrixX, vertex.yz);
                 float2 muly = mul(matrixY, vertex.xz);
+                // return  mul((vertex.x, mulx.x, mulx.y), float3(muly, vertex.y));
                 // return float3(vertex.x, mulx.x, mulx.y).xzy;
-                return float3(mul(matrixY, vertex.xz), vertex.y).xzy;
+                return float3(muly, vertex.y).xzy;
             }
 
             
@@ -115,14 +103,6 @@ Shader "Custom/360Shader"
                 o.vertex = UnityObjectToClipPos(rotated);
                 o.texcoord = v.vertex.xyz;
 
-                // // Calculate constant scale and offset for 3D layouts
-                // if (_Layout == 0) // No 3D layout
-                //     o.layout3DScaleAndOffset = float4(0, 0, 1, 1);
-                // else if (_Layout == 1) // Side-by-Side 3D layout
-                //     o.layout3DScaleAndOffset = float4(unity_StereoEyeIndex, 0, 0.5, 1);
-                // else // Over-Under 3D layout
-                //     o.layout3DScaleAndOffset = float4(0, 1 - unity_StereoEyeIndex, 1, 0.5);
-
                 return o;
             }
 
@@ -131,23 +111,24 @@ Shader "Custom/360Shader"
                 float2 tc = ToRadialCoords(i.texcoord);
 
                 // Cut around the vertical angles with center at 90 degrees
-                if (_Vertical/360 < tc.y)
-                    return _MarginColor;
-                tc.y = fmod(tc.y * 360/_Vertical, 1);
+
+                bool isOutside = tc.y < (90 - _Vertical)/180 || 0.5 + _Vertical/90 < tc.y;
+
+                if(isOutside) return _MarginColor;
+
+                tc.y = tc.y  * 90 / _Vertical;
 
                 // Cut around the horizontal angles
                 if (tc.x > _Horizontal/360)
                     return _MarginColor;
                 tc.x = fmod(tc.x * 360/_Horizontal, 1);
                 
-                //tc = (tc + i.layout3DScaleAndOffset.xy) * i.layout3DScaleAndOffset.zw;
-
-                half4 tex = tex2D(_Tex, tc);
-                half3 c = DecodeHDR(tex, _Tex_HDR);
+                half3 c = DecodeHDR(tex2D(_Tex, tc), _Tex_HDR);
                 c = c * _Tint.rgb * unity_ColorSpaceDouble.rgb;
                 c *= _Exposure;
                 return half4(c, 1);
             }
+            
             ENDCG
         }
     }
