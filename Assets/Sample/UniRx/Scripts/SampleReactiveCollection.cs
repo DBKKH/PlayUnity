@@ -42,29 +42,32 @@ namespace UniRxSample
         {
             _taskCollection
                 .ObserveAdd()
-                .Subscribe(value => { Debug.Log($"[Add]Index={value.Index},Value={value.Value}"); });
+                .Subscribe(value =>
+                {
+                    Debug.Log($"[Add]Index={value.Index},Value={value.Value.Title}, {value.Value.TimeStamp}");
+                });
 
             _taskCollection
                 .ObserveMove()
                 .Subscribe(value =>
                 {
-                    Debug.Log($"[Move]Value={value.Value},NewIndex={value.NewIndex},OldIndex={value.OldIndex}");
+                    Debug.Log($"[Move]Value=Value={value.Value.Title}, {value.Value.TimeStamp}, NewIndex={value.NewIndex},OldIndex={value.OldIndex}");
                 });
 
             _taskCollection
                 .ObserveRemove()
-                .Subscribe(value => { Debug.Log($"[Remove]Index={value.Index},Value={value.Value}"); });
+                .Subscribe(value => { Debug.Log($"[Remove]Index={value.Index},Value={value.Value.Title}, {value.Value.TimeStamp}"); });
 
             _taskCollection
                 .ObserveReplace()
                 .Subscribe(value =>
                 {
-                    Debug.Log($"[Replace]Index={value.Index},NewValue={value.NewValue},OldValue={value.OldValue}");
+                    Debug.Log($"[Replace]Index={value.Index},NewValue={value.NewValue.Title}, {value.NewValue.TimeStamp},OldValue=Value={value.OldValue.Title}, {value.OldValue.TimeStamp}");
                 });
 
             _taskCollection
                 .ObserveReset()
-                .Subscribe(value => { Debug.Log($"[Reset]"); });
+                .Subscribe(_ => { Debug.Log($"[Reset]"); });
         }
     }
 
